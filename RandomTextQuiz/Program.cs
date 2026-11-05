@@ -11,8 +11,11 @@ namespace RandomTextQuiz
 {
     internal class Program
     {
-        
-
+        static Random randomGenerator = new Random();
+        static int RandomNumber(int From, int To)
+        {
+            return randomGenerator.Next(From, To);
+        }
 
         //method to print info my device
         static void PrintInfoMyDevice()
@@ -128,7 +131,6 @@ namespace RandomTextQuiz
         }
         static char GetRandomCharType(int randomType)
         {
-            //int randomType = RandomNumber(1, 5);
             char oneChar = ';';
             switch (randomType)
             {
@@ -167,7 +169,24 @@ namespace RandomTextQuiz
         }
 
 
+        static string GenerateRandomText ()
+        {
+            string text="";
+            int NumberOfWords = RandomNumber(4,9);
+            
+            text += GetRandomWord(RandomNumber(5, 11));
+            NumberOfWords--;
 
+            do
+            {
+                text += "  "+ GetRandomWord(RandomNumber(5, 11));
+                NumberOfWords--;
+
+            }
+            while (NumberOfWords > 0);
+            
+            return text;
+        }
 
 
         static void StatGame()
@@ -175,7 +194,7 @@ namespace RandomTextQuiz
             //int NumberOfQuestions = ReadNumberOfQuestions();
             // GetInfoUser();
 
-            Console.WriteLine(GetRandomWord(4));
+            Console.WriteLine(GenerateRandomText());
         }
 
 
