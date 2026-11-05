@@ -268,6 +268,7 @@ namespace RandomTextQuiz
         }
 
 
+
         static int CalculateTotalLength(string text)
         {
             // Initialize a counter for the current word length.
@@ -302,6 +303,75 @@ namespace RandomTextQuiz
             return totalLenghtWords;
         }
 
+        static bool IsContainsVowel(string word)
+        {    // a A e E i I o O u U y Y
+            // Initialize  to indicate whether the word contains a vowel.
+            bool isContains = false;
+
+            // Loop through all characters in the word.
+            for (int i = 0; i < word.Length; i++)
+            {
+                // Convert the current character to uppercase and check if it is a vowel.
+                if (char.ToUpper(word[i]) == 'A' || char.ToUpper(word[i]) == 'E' ||
+                    char.ToUpper(word[i]) == 'I' || char.ToUpper(word[i]) == 'O' ||
+                    char.ToUpper(word[i]) == 'U' || char.ToUpper(word[i]) == 'Y'
+                   )
+                {
+                    // Set the flag to true because a vowel was found.
+                    isContains = true;
+
+                    // Stop checking the remaining characters.
+                    break;
+                }
+            }
+
+            // Return whether the word contains at least one vowel.
+            return isContains;
+        }
+
+        static int CountWordsWithVowels(string text)
+        {
+            // a A e E i I o O u U y Y
+
+            // Initialize a counter for words that contain at least one vowel.
+            int NumWordsContainsVowels = 0;
+
+            // Initialize an empty string to build each word.
+            string word = "";
+
+            // Loop through all characters in the text.
+            for (int i = 0; i < text.Length; i++)
+            {
+                // Check if the current character is not a space.
+                if (text[i] != ' ')
+                {
+                    // Add the current character to the current word.
+                    word += text[i];
+                }
+                else
+                {
+                    // Check whether the completed word contains a vowel.
+                    if (IsContainsVowel(word))
+                    {
+                        // Increase the counter if the word contains a vowel.
+                        NumWordsContainsVowels++;
+                    }
+
+                    // Clear the word to start building the next one.
+                    word = "";
+                }
+            }
+
+            // Check the last word because it may not be followed by a space.
+            if (IsContainsVowel(word))
+            {
+                // Increase the counter if the last word contains a vowel.
+                NumWordsContainsVowels++;
+            }
+
+            // Return the total number of words containing vowels.
+            return NumWordsContainsVowels;
+        }
 
         static void StatGame()
         {
@@ -310,8 +380,10 @@ namespace RandomTextQuiz
 
             string s = GenerateRandomText();
             Console.WriteLine(s); //gernerated text random
-            Console.WriteLine("sum is :"+CalculateTotalLength(s));
+            Console.WriteLine("sum is :" + CalculateTotalLength(s));
+            Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
 
+            
         }
 
 
