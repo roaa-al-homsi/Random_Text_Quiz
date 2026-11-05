@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -9,7 +10,11 @@ using System.Threading.Tasks;
 namespace RandomTextQuiz
 {
     internal class Program
-    {  //method to print info my device
+    {
+        
+
+
+        //method to print info my device
         static void PrintInfoMyDevice()
         {
             Console.WriteLine("Windows version: {0}", Environment.OSVersion);
@@ -20,12 +25,7 @@ namespace RandomTextQuiz
             Console.WriteLine("Logical Drives Available : {0}", String.Join(", ", Environment.GetLogicalDrives()).TrimEnd(',').Replace("\\", String.Empty));
 
         }
-        static int RandomNumber(int From, int To)
-        {
-            Random num = new Random();
-            int number = num.Next(From, To);
-            return number;
-        }
+     
         static int ReadNumberOfQuestions()
         {
             int numQuestions = 0;
@@ -88,10 +88,10 @@ namespace RandomTextQuiz
                         if (text[i] == distinctChar[j])
                         {
                             isFound = true;
-                          
+
                         }
                     }
-                    if(!isFound)
+                    if (!isFound)
                     {
                         distinctChar += text[i];
                     }
@@ -103,19 +103,79 @@ namespace RandomTextQuiz
 
         static void GetInfoUser()
         {
-
             string info = ReadInfoPlayer();
-            Console.WriteLine(info);
-            Console.WriteLine(GetDistinctChar(info));
+            Console.WriteLine("Your name,Id and your skills :  " + info);
+            Console.WriteLine("Distinct Chars are : " + GetDistinctChar(info));
         }
+
+        static char GetRandomSymbol(int num)
+        {
+            //63  33  59  35  unicode for this symbols.
+            //?   !   ;   # 
+            char symbol =';' ;
+            switch (num)
+            {
+                case 1:
+                    symbol= '?'; break;
+                case 2:
+                    symbol = '!'; break;
+                case 3:
+                    symbol = ';'; break;
+                case 4:
+                    symbol = '#'; break;
+            }
+            return symbol;
+        }
+        static char GetRandomCharType(int randomType)
+        {
+            //int randomType = RandomNumber(1, 5);
+            char oneChar = ';';
+            switch (randomType)
+            {
+                case 1:
+                    oneChar = (char)RandomNumber(65, 91);
+                    break;
+                case 2:
+                    oneChar = (char)RandomNumber(97, 123);
+                    break;
+
+                case 3:
+                    oneChar = (char)RandomNumber(48, 58);//gernerated numbers as char (0 => 9)
+                    break;
+
+                case 4:
+                    oneChar = GetRandomSymbol(RandomNumber(1, 5));
+                    break;
+
+            }
+           return oneChar;
+        }
+        static string GetRandomWord(int lengthWord)
+        {
+            string word = "";
+
+            // Generate the first character as a letter, this gives 1 or 2 
+            word += GetRandomCharType(RandomNumber(1, 3));
+
+            // Generate the remaining characters.
+            for (int i = 1; i < lengthWord; i++)
+            {
+                word += GetRandomCharType(RandomNumber(1, 5));
+            }
+
+            return word;
+        }
+
 
 
 
 
         static void StatGame()
         {
-            int NumberOfQuestions = ReadNumberOfQuestions();
-            GetInfoUser();
+            //int NumberOfQuestions = ReadNumberOfQuestions();
+            // GetInfoUser();
+
+            Console.WriteLine(GetRandomWord(4));
         }
 
 
