@@ -176,7 +176,6 @@ namespace RandomTextQuiz
             // Return the selected symbol.
             return symbol;
         }
-
         static char GenerateRandomCharacter(int randomType)
         {
             // Initialize a character variable to store the generated character.
@@ -213,7 +212,6 @@ namespace RandomTextQuiz
             // Return the generated character.
             return oneChar;
         }
-
         static string GenerateRandomWord(int lengthWord)
         {
             // Initialize an empty string to store the generated word.
@@ -233,7 +231,6 @@ namespace RandomTextQuiz
             // Return the complete generated word.
             return word;
         }
-
         static string GenerateRandomText()
         {
             // Initialize an empty string to store the generated text.
@@ -302,7 +299,6 @@ namespace RandomTextQuiz
             // Return the total length of all words.
             return totalLenghtWords;
         }
-
         static bool IsContainsVowel(string word)
         {    // a A e E i I o O u U y Y
             // Initialize  to indicate whether the word contains a vowel.
@@ -328,7 +324,6 @@ namespace RandomTextQuiz
             // Return whether the word contains at least one vowel.
             return isContains;
         }
-
         static int CountWordsWithVowels(string text)
         {
             // a A e E i I o O u U y Y
@@ -373,6 +368,46 @@ namespace RandomTextQuiz
             return NumWordsContainsVowels;
         }
 
+        static bool IsContainsLowerCharacter(string word)
+        {
+            for (int i = 0; i < word.Length; i++)
+            {
+                if(word[i] == char.ToLower(word[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        static int CountWordsWithLowerCharacter(string text)
+        {
+            int NumWordsWithLowerCharacter = 0;
+            string word = "";
+            for (int i = 0;i < text.Length; i++)
+            {
+                if(text[i] != ' ')
+                {
+                    word += text[i];
+                }
+                else
+                {
+                    if(IsContainsLowerCharacter(word))
+                    {
+                        NumWordsWithLowerCharacter++;
+                    }
+                    word = "";
+                }
+            }
+            if (IsContainsLowerCharacter(word))
+            {
+                NumWordsWithLowerCharacter++;
+            }
+            return NumWordsWithLowerCharacter;
+
+        }
+
+
         static void StatGame()
         {
             //int NumberOfQuestions = ReadNumberOfQuestions();
@@ -380,10 +415,10 @@ namespace RandomTextQuiz
 
             string s = GenerateRandomText();
             Console.WriteLine(s); //gernerated text random
-            Console.WriteLine("sum is :" + CalculateTotalLength(s));
-            Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
+           // Console.WriteLine("sum is :" + CalculateTotalLength(s));
+            //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
+            Console.WriteLine("sum is vowel :" + CountWordsWithLowerCharacter(s));
 
-            
         }
 
 
