@@ -1,0 +1,7 @@
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\bin\Debug\RandomTextQuiz.exe.config
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\bin\Debug\RandomTextQuiz.exe
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\bin\Debug\RandomTextQuiz.pdb
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\obj\Debug\RandomTextQuiz.csproj.AssemblyReference.cache
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\obj\Debug\RandomTextQuiz.csproj.CoreCompileInputs.cache
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\obj\Debug\RandomTextQuiz.exe
+C:\Users\Ruaa\source\repos\RandomTextQuiz\RandomTextQuiz\obj\Debug\RandomTextQuiz.pdb
