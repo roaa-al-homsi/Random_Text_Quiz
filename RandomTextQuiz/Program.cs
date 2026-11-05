@@ -51,6 +51,7 @@ namespace RandomTextQuiz
             return numQuestions;
         }
 
+        #region User
         // Check whether the entered text contains at least six accepted characters.
         static bool IsTextValid(string text)
         {
@@ -149,6 +150,8 @@ namespace RandomTextQuiz
             // Display distinct accepted characters in their original order.
             Console.WriteLine("Distinct Chars are : " + GetDistinctCharacters(info));
         }
+        #endregion
+
 
         static char GetRandomSymbol(int num)
         {
@@ -224,7 +227,7 @@ namespace RandomTextQuiz
             {
                 // Generate a random character and append it to the word.
                 word += GenerateRandomCharacter(RandomNumber(1, 5));  // 1 => (A-Z)    ,    2  =>(a-z) ,     3 =>(0 => 9)  , 4 => (1 =>? , 2 =>!, 3 =>; , 4 => #) 
-                                                                     
+
             }
 
             // Return the complete generated word.
@@ -265,14 +268,49 @@ namespace RandomTextQuiz
         }
 
 
+        static int CalculateTotalLength(string text)
+        {
+            // Initialize a counter for the current word length.
+            int countLengthWord = 0;
+
+            // Initialize a variable to store the total length of all words.
+            int totalLenghtWords = 0;
+
+            // Loop through all characters in the text.
+            for (int i = 0; i < text.Length; i++)
+            {
+                // Check if the current character is not a space.
+                if (text[i] != ' ')
+                {
+                    // Increase the current word length by one.
+                    ++countLengthWord;
+                }
+                else
+                {
+                    // Add the completed word length to the total.
+                    totalLenghtWords += countLengthWord;
+
+                    // Reset the counter to start counting the next word.
+                    countLengthWord = 0;
+                }
+            }
+
+            // Add the length of the last word because it may not end with a space.
+            totalLenghtWords += countLengthWord;
+
+            // Return the total length of all words.
+            return totalLenghtWords;
+        }
+
+
         static void StatGame()
         {
             //int NumberOfQuestions = ReadNumberOfQuestions();
-            // GetInfoUser();
-            Console.WriteLine(GenerateRandomText()); //gernerated text random
+            // DisplayPlayerInfo();
 
-
-
+            string s = GenerateRandomText();
+            Console.WriteLine(s); //gernerated text random
+            Console.WriteLine("sum is :"+CalculateTotalLength(s));
 
         }
 
