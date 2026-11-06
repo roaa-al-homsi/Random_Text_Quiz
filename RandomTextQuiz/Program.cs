@@ -367,19 +367,17 @@ namespace RandomTextQuiz
             // Return the total number of words containing vowels.
             return NumWordsContainsVowels;
         }
-
         static bool IsContainsLowerCharacter(string word)
         {
             for (int i = 0; i < word.Length; i++)
             {
-                if(word[i] == char.ToLower(word[i]))
+                if (word[i] >= 'a' && word[i] <= 'z')
                 {
                     return true;
                 }
             }
             return false;
         }
-
         static int CountWordsWithLowerCharacter(string text)
         {
             int NumWordsWithLowerCharacter = 0;
@@ -406,6 +404,7 @@ namespace RandomTextQuiz
             return NumWordsWithLowerCharacter;
 
         }
+
 
 
         static void StatGame()
