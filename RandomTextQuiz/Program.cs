@@ -11,9 +11,6 @@ namespace RandomTextQuiz
 {
     internal class Program
     {
-        // Stores the total number of questions entered by the player.
-     
-
         // Stores the randomly generated text for each question.
         static string[] GeneratedTexts;
 
@@ -35,11 +32,6 @@ namespace RandomTextQuiz
         // 2 = Some answers are correct and some are wrong.
         static int[] EvaluationCodes;
 
-
-
-
-
-
         static Random randomGenerator = new Random();
         static int RandomNumber(int From, int To)
         {
@@ -57,7 +49,6 @@ namespace RandomTextQuiz
             Console.WriteLine("Logical Drives Available : {0}", String.Join(", ", Environment.GetLogicalDrives()).TrimEnd(',').Replace("\\", String.Empty));
 
         }
-
         static int ReadNumberOfQuestions()
         {
             int numberOfQuestions;
@@ -77,8 +68,6 @@ namespace RandomTextQuiz
             // Return the valid number of questions.
             return numberOfQuestions;
         }
-
-
         static void InitializeArrays(int numberOfQuestions)
         {
             // Create arrays to store data for all questions.
@@ -550,7 +539,6 @@ namespace RandomTextQuiz
             // Return the player's answer if it is not IGNORE.
             return answer;
         }
-
         static void StartQuiz(int numberOfQuestions)
         {
             string answer = "";
@@ -637,9 +625,55 @@ namespace RandomTextQuiz
 
                 // Convert the player's answer to an integer and store it.
                 UserSpecialCharactersCounts[i] = int.Parse(answer);
+
+                EvaluateQuestion(i);// i is a questionIndex.
+
             }
         }
+        static void EvaluateQuestion(int questionIndex)
+        {
+            // Initialize a counter to store the number of correct answers.
+            byte correctAnswer = 0;
 
+            // Compare the player's answer with the correct answer for each question.
+            // Increase the counter if the player's answer is correct.
+
+            if (UserVowelsCounts[questionIndex] == CorrectVowelsCounts[questionIndex])
+            {
+                ++correctAnswer;
+            }
+
+            if (UserTotalLengths[questionIndex] == CorrectTotalLengths[questionIndex])
+            {
+                ++correctAnswer;
+            }
+
+            if (UserSpecialCharactersCounts[questionIndex] == CorrectSpecialCharactersCounts[questionIndex])
+            {
+                ++correctAnswer;
+            }
+
+            if (UserLowerCharactersCounts[questionIndex] == CorrectLowerCharactersCounts[questionIndex])
+            {
+                ++correctAnswer;
+            }
+
+            // Determine the evaluation code based on the number of correct answers.
+            switch (correctAnswer)
+            {
+                case 0: // All four answers are wrong.
+                    EvaluationCodes[questionIndex] = 0;
+                    break;
+
+                case 4: // All four answers are correct.
+                    EvaluationCodes[questionIndex] = 1;
+                    break;
+
+                default: // At least one answer is correct and at least one is wrong.
+                    EvaluationCodes[questionIndex] = 2;
+                    break;
+            }
+        }
 
 
         static void StatGame()
