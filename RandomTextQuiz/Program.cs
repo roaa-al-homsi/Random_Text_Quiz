@@ -299,6 +299,7 @@ namespace RandomTextQuiz
             // Return the total length of all words.
             return totalLenghtWords;
         }
+
         static bool IsContainsVowel(string word)
         {    // a A e E i I o O u U y Y
             // Initialize  to indicate whether the word contains a vowel.
@@ -367,6 +368,7 @@ namespace RandomTextQuiz
             // Return the total number of words containing vowels.
             return NumWordsContainsVowels;
         }
+
         static bool IsContainsLowerCharacter(string word)
         {
             // Loop through all characters in the word.
@@ -425,6 +427,64 @@ namespace RandomTextQuiz
             return NumWordsWithLowerCharacter;
         }
 
+        static bool IsContainsSpecialCharacter(string word)
+        {
+            // Loop through all characters in the word.
+            for (int i = 0; i < word.Length; i++)
+            {
+                // Check if the current character is one of the four special characters.
+                if (word[i] == '?' || word[i] == '!' ||
+                    word[i] == ';' || word[i] == '#')
+                {
+                    // Return true if a special character is found.
+                    return true;
+                }
+            }
+
+            // Return false if no special characters are found.
+            return false;
+        }
+        static int CountWordsWithSpecialCharacters(string text)
+        {
+            // Initialize a counter for words containing special characters.
+            int NumWordsWithSpecialCharacters = 0;
+
+            // Initialize an empty string to build each word.
+            string word = "";
+
+            // Loop through all characters in the text.
+            for (int i = 0; i < text.Length; i++)
+            {
+                // Check if the current character is not a space.
+                if (text[i] != ' ')
+                {
+                    // Add the current character to the word.
+                    word += text[i];
+                }
+                else
+                {
+                    // Check if the completed word contains a special character.
+                    if (IsContainsSpecialCharacter(word))
+                    {
+                        // Increase the counter if the word contains a special character.
+                        NumWordsWithSpecialCharacters++;
+                    }
+
+                    // Clear the word to start building the next one.
+                    word = "";
+                }
+            }
+
+            // Check the last word because it may not be followed by a space.
+            if (IsContainsSpecialCharacter(word))
+            {
+                // Increase the counter if the last word contains a special character.
+                NumWordsWithSpecialCharacters++;
+            }
+
+            // Return the total number of words containing special characters.
+            return NumWordsWithSpecialCharacters;
+        }
 
 
 
@@ -439,8 +499,8 @@ namespace RandomTextQuiz
             Console.WriteLine(s); //gernerated text random
            // Console.WriteLine("sum is :" + CalculateTotalLength(s));
             //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
-            Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
-
+            //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
+            Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
         }
 
 
