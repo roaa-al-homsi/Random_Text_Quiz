@@ -11,6 +11,35 @@ namespace RandomTextQuiz
 {
     internal class Program
     {
+        // Stores the total number of questions entered by the player.
+     
+
+        // Stores the randomly generated text for each question.
+        static string[] GeneratedTexts;
+
+        // Stores the correct answers for each question.
+        static int[] CorrectTotalLengths;
+        static int[] CorrectVowelsCounts;
+        static int[] CorrectLowerCharactersCounts;
+        static int[] CorrectSpecialCharactersCounts;
+
+        // Stores the answers entered by the player for each question.
+        static int[] UserTotalLengths;
+        static int[] UserVowelsCounts;
+        static int[] UserLowerCharactersCounts;
+        static int[] UserSpecialCharactersCounts;
+
+        // Stores the evaluation code for each question:
+        // 0 = All answers are wrong.
+        // 1 = All answers are correct.
+        // 2 = Some answers are correct and some are wrong.
+        static int[] EvaluationCodes;
+
+
+
+
+
+
         static Random randomGenerator = new Random();
         static int RandomNumber(int From, int To)
         {
@@ -31,24 +60,42 @@ namespace RandomTextQuiz
 
         static int ReadNumberOfQuestions()
         {
-            // Initialize the number of questions.
-            int numQuestions = 0;
-
+            int numberOfQuestions;
             // Ask the user to enter the maximum number of questions.
             Console.WriteLine("Please, Enter The Maximum Number Of Questions :");
 
             // Read the number entered by the user.
-            numQuestions = int.Parse(Console.ReadLine());
+            numberOfQuestions = int.Parse(Console.ReadLine());
 
             // Repeat until the user enters a positive number.
-            while (numQuestions <= 0)
+            while (numberOfQuestions <= 0)
             {
-                Console.WriteLine("The Number Of Questions Shoud Be An Integer!!!");
-                numQuestions = int.Parse(Console.ReadLine());
+                Console.WriteLine("The Number Of Questions Shoud Be Greater Than Zero !!!");
+                numberOfQuestions = int.Parse(Console.ReadLine());
             }
 
             // Return the valid number of questions.
-            return numQuestions;
+            return numberOfQuestions;
+        }
+
+
+        static void InitializeArrays(int numberOfQuestions)
+        {
+            // Create arrays to store data for all questions.
+            GeneratedTexts = new string[numberOfQuestions];
+            EvaluationCodes = new int[numberOfQuestions];
+
+            // Create arrays to store the correct answers for each question.
+            CorrectLowerCharactersCounts = new int[numberOfQuestions];
+            CorrectSpecialCharactersCounts = new int[numberOfQuestions];
+            CorrectTotalLengths = new int[numberOfQuestions];
+            CorrectVowelsCounts = new int[numberOfQuestions];
+
+            // Create arrays to store the answers entered by the player.
+            UserTotalLengths = new int[numberOfQuestions];
+            UserLowerCharactersCounts = new int[numberOfQuestions];
+            UserSpecialCharactersCounts = new int[numberOfQuestions];
+            UserVowelsCounts = new int[numberOfQuestions];
         }
 
         #region User
@@ -486,7 +533,112 @@ namespace RandomTextQuiz
             return NumWordsWithSpecialCharacters;
         }
 
+      
 
+        // Read the player's answer and check if they want to ignore the question.
+        static string ReadPlayerAnswer()
+        {
+            string answer = "";
+            answer = Console.ReadLine();
+
+            // Check if the answer is IGNORE, regardless of letter case.
+            if (answer.ToUpper() == "IGNORE")
+            {
+                return answer = "IGNORE";
+            }
+
+            // Return the player's answer if it is not IGNORE.
+            return answer;
+        }
+
+        static void StartQuiz(int numberOfQuestions)
+        {
+            string answer = "";
+
+            // Repeat the question process according to the requested number of questions.
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                // Display the current question number.
+                Console.WriteLine("Question :  " + (i + 1));
+
+                // Generate a random text and display it to the player.
+                string generatedText = GenerateRandomText();
+                Console.WriteLine(generatedText);
+
+                // Store the generated text in the corresponding array position.
+                GeneratedTexts[i] = generatedText;
+
+                // Calculate and store the four correct answers for the current question.
+                CorrectTotalLengths[i] = CalculateTotalLength(generatedText);
+                CorrectVowelsCounts[i] = CountWordsWithVowels(generatedText);
+                CorrectLowerCharactersCounts[i] = CountWordsWithLowerCharacter(generatedText);
+                CorrectSpecialCharactersCounts[i] = CountWordsWithSpecialCharacters(generatedText);
+
+                // Ask the player for the total length of all words.
+                Console.WriteLine(" What is the total length of the words?");
+                answer = ReadPlayerAnswer();
+
+                // Check if the player wants to ignore the current question.
+                if (answer == "IGNORE")
+                {
+                    // Mark the entire question as wrong and move to the next question.
+                    EvaluationCodes[i] = 0;
+                    Console.WriteLine("The Question Is Ignored...As you like..");
+                    continue;
+                }
+
+                // Convert the player's answer to an integer and store it.
+                UserTotalLengths[i] = int.Parse(answer);
+
+                // Ask how many words contain at least one vowel.
+                Console.WriteLine("How many words contain vowels [a A e E i I o O u U y Y] ?");
+                answer = ReadPlayerAnswer();
+
+                // Check if the player wants to ignore the current question.
+                if (answer == "IGNORE")
+                {
+                    // Mark the entire question as wrong and move to the next question.
+                    EvaluationCodes[i] = 0;
+                    Console.WriteLine("The Question Is Ignored...As you like..");
+                    continue;
+                }
+
+                // Convert the player's answer to an integer and store it.
+                UserVowelsCounts[i] = int.Parse(answer);
+
+                // Ask how many words contain at least one lowercase letter.
+                Console.WriteLine("How many words contain lowercase letters?");
+                answer = ReadPlayerAnswer();
+
+                // Check if the player wants to ignore the current question.
+                if (answer == "IGNORE")
+                {
+                    // Mark the entire question as wrong and move to the next question.
+                    EvaluationCodes[i] = 0;
+                    Console.WriteLine("The Question Is Ignored...As you like..");
+                    continue;
+                }
+
+                // Convert the player's answer to an integer and store it.
+                UserLowerCharactersCounts[i] = int.Parse(answer);
+
+                // Ask how many words contain at least one special character.
+                Console.WriteLine("How many words contain special characters [! ; # ? ] ? ");
+                answer = ReadPlayerAnswer();
+
+                // Check if the player wants to ignore the current question.
+                if (answer == "IGNORE")
+                {
+                    // Mark the entire question as wrong and move to the next question.
+                    EvaluationCodes[i] = 0;
+                    Console.WriteLine("The Question Is Ignored...As you like..");
+                    continue;
+                }
+
+                // Convert the player's answer to an integer and store it.
+                UserSpecialCharactersCounts[i] = int.Parse(answer);
+            }
+        }
 
 
 
@@ -495,12 +647,16 @@ namespace RandomTextQuiz
             //int NumberOfQuestions = ReadNumberOfQuestions();
             // DisplayPlayerInfo();
 
-            string s = GenerateRandomText();
-            Console.WriteLine(s); //gernerated text random
-           // Console.WriteLine("sum is :" + CalculateTotalLength(s));
-            //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
-            //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
-            Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
+           // string s = GenerateRandomText();
+          //  Console.WriteLine(s); //gernerated text random
+                                  // Console.WriteLine("sum is :" + CalculateTotalLength(s));
+                                  //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
+                                  //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
+                                  // Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
+
+            int n = ReadNumberOfQuestions();
+            InitializeArrays(n);
+            StartQuiz(n);
         }
 
 
