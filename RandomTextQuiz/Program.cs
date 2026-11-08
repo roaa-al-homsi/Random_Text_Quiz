@@ -369,41 +369,64 @@ namespace RandomTextQuiz
         }
         static bool IsContainsLowerCharacter(string word)
         {
+            // Loop through all characters in the word.
             for (int i = 0; i < word.Length; i++)
             {
+                // Check if the current character is a lowercase letter.
                 if (word[i] >= 'a' && word[i] <= 'z')
                 {
+                    // Return true if a lowercase letter is found.
                     return true;
                 }
             }
+
+            // Return false if no lowercase letters are found.
             return false;
         }
         static int CountWordsWithLowerCharacter(string text)
         {
+            // Initialize a counter for words containing lowercase letters.
             int NumWordsWithLowerCharacter = 0;
+
+            // Initialize an empty string to build each word.
             string word = "";
-            for (int i = 0;i < text.Length; i++)
+
+            // Loop through all characters in the text.
+            for (int i = 0; i < text.Length; i++)
             {
-                if(text[i] != ' ')
+                // Check if the current character is not a space.
+                if (text[i] != ' ')
                 {
+                    // Add the current character to the word.
                     word += text[i];
                 }
                 else
                 {
-                    if(IsContainsLowerCharacter(word))
+                    // Check if the completed word contains a lowercase letter.
+                    if (IsContainsLowerCharacter(word))
                     {
+                        // Increase the counter if the word contains a lowercase letter.
                         NumWordsWithLowerCharacter++;
                     }
+
+                    // Clear the word to start building the next one.
                     word = "";
                 }
             }
+
+            // Check the last word because it may not be followed by a space.
             if (IsContainsLowerCharacter(word))
             {
+                // Increase the counter if the last word contains a lowercase letter.
                 NumWordsWithLowerCharacter++;
             }
-            return NumWordsWithLowerCharacter;
 
+            // Return the total number of words containing lowercase letters.
+            return NumWordsWithLowerCharacter;
         }
+
+
+
 
 
 
@@ -416,7 +439,7 @@ namespace RandomTextQuiz
             Console.WriteLine(s); //gernerated text random
            // Console.WriteLine("sum is :" + CalculateTotalLength(s));
             //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
-            Console.WriteLine("sum is vowel :" + CountWordsWithLowerCharacter(s));
+            Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
 
         }
 
