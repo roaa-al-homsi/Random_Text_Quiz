@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -522,7 +523,7 @@ namespace RandomTextQuiz
             return NumWordsWithSpecialCharacters;
         }
 
-      
+
 
         // Read the player's answer and check if they want to ignore the question.
         static string ReadPlayerAnswer()
@@ -676,21 +677,103 @@ namespace RandomTextQuiz
         }
 
 
+
+        static double CalculateCorrectAnswersPercentage()
+        {
+            return   0;
+        }
+
+        static int ReadChoicePlayerForResultMenu()
+        {
+            int choice = 0;
+            string input = "";
+            do
+            {
+                Console.WriteLine(" Please enter what do you want?");
+                input = Console.ReadLine();
+                if(input.ToUpper()=="QUIT")
+                {
+                    //exite form program.
+                    return -1;
+                    
+                }
+                choice = int.Parse(input);
+
+            } while (choice < 1 || choice > 5);
+
+            return choice;
+
+        }
+        static void PerformChoiceStatisticMenu(int choice)
+        {
+            switch(choice)
+            {
+                case 1:
+                    CalculateCorrectAnswersPercentage();
+                    break;
+                case 2:
+                    //ShowGeneratedTexts();
+                    break;
+                case 3:
+                    //ShowUserAnswers();
+                    break;
+                case 4:
+                   // ShowCorrectAnswers();
+                    break;
+                case 5:
+                  //  ShowUserAndCorrectAnswers();
+                    break;
+                case -1:
+                    //  exit;
+                    break;
+            }
+        }
+        static void DisplayStatisticsAndResultMenu()
+        {
+            int choice = 0;
+            do
+            {
+                Console.Clear();
+
+                Console.WriteLine();
+                Console.WriteLine("******************* STATISTICS AND RESULT MENU *******************");
+                Console.WriteLine("*************************************************************");
+                Console.WriteLine();
+                Console.WriteLine("           [1] Show percentage of correct answers.  ");
+                Console.WriteLine("           [2] Show generated text for each question.  ");
+                Console.WriteLine("           [3] Show user answer without text.  ");
+                Console.WriteLine("           [4] Show correct answer without text.  ");
+                Console.WriteLine("           [5] Show user answer and correct answer together without text.  ");
+                Console.WriteLine("           [6] Terminate the program using [quit] don't use 6 input..  ");
+                Console.WriteLine("*************************************************************");
+
+                choice = ReadChoicePlayerForResultMenu();
+                PerformChoiceStatisticMenu(choice);
+
+            } while (choice != -1) ;
+        }
         static void StatGame()
         {
             //int NumberOfQuestions = ReadNumberOfQuestions();
             // DisplayPlayerInfo();
 
-           // string s = GenerateRandomText();
-          //  Console.WriteLine(s); //gernerated text random
-                                  // Console.WriteLine("sum is :" + CalculateTotalLength(s));
-                                  //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
-                                  //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
-                                  // Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
+            // string s = GenerateRandomText();
+            //  Console.WriteLine(s); //gernerated text random
+            // Console.WriteLine("sum is :" + CalculateTotalLength(s));
+            //Console.WriteLine("sum is vowel :" + CountWordsWithVowels(s));
+            //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
+            // Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
 
             int n = ReadNumberOfQuestions();
-            InitializeArrays(n);
-            StartQuiz(n);
+            //InitializeArrays(n);
+            //StartQuiz(n);
+
+            //القسم التاني للوظيفة 
+
+
+            DisplayStatisticsAndResultMenu();
+
+
         }
 
 
