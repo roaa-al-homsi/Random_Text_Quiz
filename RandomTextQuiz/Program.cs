@@ -676,6 +676,75 @@ namespace RandomTextQuiz
             }
         }
 
+        static int CountTotalCorrectAnswers()
+        {
+            // Initialize a counter to store the total number of correct answers.
+            int countCorrectPlayer = 0;
+
+            // Loop through all questions.
+            for (int i = 0; i < CorrectTotalLengths.Length; i++)
+            {
+                // Skip the current question if it was ignored or all its answers were wrong.
+                if (EvaluationCodes[i] == 0)
+                {
+                    continue;
+                }
+
+                // Compare the player's total length answer with the correct answer.
+                // Increment the counter if the answer is correct.
+                if (UserTotalLengths[i] == CorrectTotalLengths[i])
+                {
+                    ++countCorrectPlayer;
+                }
+
+                // Compare the player's vowels count with the correct answer.
+                if (UserVowelsCounts[i] == CorrectVowelsCounts[i])
+                {
+                    ++countCorrectPlayer;
+                }
+
+                // Compare the player's special characters count with the correct answer.
+                if (UserSpecialCharactersCounts[i] == CorrectSpecialCharactersCounts[i])
+                {
+                    ++countCorrectPlayer;
+                }
+
+                // Compare the player's lowercase characters count with the correct answer.
+                if (UserLowerCharactersCounts[i] == CorrectLowerCharactersCounts[i])
+                {
+                    ++countCorrectPlayer;
+                }
+            }
+
+            // Return the total number of correct answers.
+            return countCorrectPlayer;
+        }
+        static double CalculateCorrectAnswersPercentage()
+        {
+            // Calculate the percentage of correct answers out of all possible answers.
+            double percentage = (CountTotalCorrectAnswers() / (double)(CorrectTotalLengths.Length * 4)) * 100;
+
+            // Return the calculated percentage.
+            return percentage;
+        }
+
+        static void ShowGeneratedTexts()
+        {
+            // Display the section title.
+            Console.WriteLine("************* All Generated Texts *************");
+
+            // Loop through all generated texts.
+            for (int i = 0; i < GeneratedTexts.Length; i++)
+            {
+                // Display the question number and its generated text.
+                Console.WriteLine("Question " + (i + 1) + ": " + GeneratedTexts[i]);
+
+                // Print an empty line to separate the questions.
+                Console.WriteLine();
+            }
+        }
+
+
         static int ReadChoicePlayerForResultMenu()
         {
             int choice = 0;
@@ -684,11 +753,11 @@ namespace RandomTextQuiz
             {
                 Console.WriteLine(" Please enter what do you want?");
                 input = Console.ReadLine();
-                if(input.ToUpper()=="QUIT")
+                if (input.ToUpper() == "QUIT")
                 {
                     //exite form program.
                     return -1;
-                    
+
                 }
                 choice = int.Parse(input);
 
@@ -699,24 +768,23 @@ namespace RandomTextQuiz
         }
         static void PerformChoiceStatisticMenu(int choice)
         {
-            switch(choice)
+            switch (choice)
             {
                 case 1:
                     Console.WriteLine("");
                     Console.WriteLine("*** Correct Answers Percentage : " + CalculateCorrectAnswersPercentage() + "%");
-             
                     break;
                 case 2:
-                    //ShowGeneratedTexts();
+                    ShowGeneratedTexts();
                     break;
                 case 3:
                     //ShowUserAnswers();
                     break;
                 case 4:
-                   // ShowCorrectAnswers();
+                    // ShowCorrectAnswers();
                     break;
                 case 5:
-                  //  ShowUserAndCorrectAnswers();
+                    //  ShowUserAndCorrectAnswers();
                     break;
                 case -1:
                     //  exit;
@@ -745,46 +813,11 @@ namespace RandomTextQuiz
                 choice = ReadChoicePlayerForResultMenu();
                 PerformChoiceStatisticMenu(choice);
                 Console.ReadKey();
-            } while (choice != -1) ;
+            } while (choice != -1);
         }
 
-        static int CountTotalCorrectAnswers()
-        {
-            int countCorrectPlayer = 0;
 
-            for (int i = 0; i < CorrectTotalLengths.Length; i++)
-            {
-                if (EvaluationCodes[i] == 0)
-                {//player ignore
-                    continue;
-                }
-                if (UserTotalLengths[i] == CorrectTotalLengths[i])
-                {
-                    ++countCorrectPlayer;
 
-                }
-                if (UserVowelsCounts[i] == CorrectVowelsCounts[i])
-                {
-                    ++countCorrectPlayer;
-
-                }
-                if (UserSpecialCharactersCounts[i] == CorrectSpecialCharactersCounts[i])
-                {
-                    ++countCorrectPlayer;
-
-                }
-                if (UserLowerCharactersCounts[i] == CorrectLowerCharactersCounts[i])
-                {
-                    ++countCorrectPlayer;
-                }
-            }
-            return countCorrectPlayer;
-        }
-        static double CalculateCorrectAnswersPercentage()
-        {
-            double percentage = (CountTotalCorrectAnswers() / (double)(CorrectTotalLengths.Length * 4)) * 100;
-            return percentage;
-        }
 
         static void StatGame()
         {
@@ -806,8 +839,8 @@ namespace RandomTextQuiz
 
 
             DisplayStatisticsAndResultMenu();
-            
-           
+
+
         }
 
 
