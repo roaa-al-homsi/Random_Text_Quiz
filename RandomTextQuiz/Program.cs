@@ -676,13 +676,6 @@ namespace RandomTextQuiz
             }
         }
 
-
-
-        static double CalculateCorrectAnswersPercentage()
-        {
-            return   0;
-        }
-
         static int ReadChoicePlayerForResultMenu()
         {
             int choice = 0;
@@ -709,7 +702,9 @@ namespace RandomTextQuiz
             switch(choice)
             {
                 case 1:
-                    CalculateCorrectAnswersPercentage();
+                    Console.WriteLine("");
+                    Console.WriteLine("*** Correct Answers Percentage : " + CalculateCorrectAnswersPercentage() + "%");
+             
                     break;
                 case 2:
                     //ShowGeneratedTexts();
@@ -749,9 +744,48 @@ namespace RandomTextQuiz
 
                 choice = ReadChoicePlayerForResultMenu();
                 PerformChoiceStatisticMenu(choice);
-
+                Console.ReadKey();
             } while (choice != -1) ;
         }
+
+        static int CountTotalCorrectAnswers()
+        {
+            int countCorrectPlayer = 0;
+
+            for (int i = 0; i < CorrectTotalLengths.Length; i++)
+            {
+                if (EvaluationCodes[i] == 0)
+                {//player ignore
+                    continue;
+                }
+                if (UserTotalLengths[i] == CorrectTotalLengths[i])
+                {
+                    ++countCorrectPlayer;
+
+                }
+                if (UserVowelsCounts[i] == CorrectVowelsCounts[i])
+                {
+                    ++countCorrectPlayer;
+
+                }
+                if (UserSpecialCharactersCounts[i] == CorrectSpecialCharactersCounts[i])
+                {
+                    ++countCorrectPlayer;
+
+                }
+                if (UserLowerCharactersCounts[i] == CorrectLowerCharactersCounts[i])
+                {
+                    ++countCorrectPlayer;
+                }
+            }
+            return countCorrectPlayer;
+        }
+        static double CalculateCorrectAnswersPercentage()
+        {
+            double percentage = (CountTotalCorrectAnswers() / (double)(CorrectTotalLengths.Length * 4)) * 100;
+            return percentage;
+        }
+
         static void StatGame()
         {
             //int NumberOfQuestions = ReadNumberOfQuestions();
@@ -765,15 +799,15 @@ namespace RandomTextQuiz
             // Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
 
             int n = ReadNumberOfQuestions();
-            //InitializeArrays(n);
-            //StartQuiz(n);
+            InitializeArrays(n);
+            StartQuiz(n);
 
             //القسم التاني للوظيفة 
 
 
             DisplayStatisticsAndResultMenu();
-
-
+            
+           
         }
 
 
