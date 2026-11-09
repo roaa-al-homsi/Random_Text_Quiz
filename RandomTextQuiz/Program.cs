@@ -771,7 +771,34 @@ namespace RandomTextQuiz
                 Console.WriteLine();
             }
         }
+        static void ShowCorrectAnswers()
+        {
+            // Display the section title.
+            Console.WriteLine("************* All Correct Answers *************\n");
 
+            // Loop through all questions.
+            for (int i = 0; i < CorrectTotalLengths.Length; i++)
+            {
+                // Display the question number and indicate that the following values are the correct answers.
+                Console.WriteLine("Correct Answers for Question " + (i + 1));
+                Console.WriteLine("*****************************************\n");
+
+                // Display the correct answer for the total length question.
+                Console.WriteLine("Correct Answer - Total Length: " + CorrectTotalLengths[i]);
+
+                // Display the correct answer for the number of words containing vowels.
+                Console.WriteLine("Correct Answer - Words with Vowels: " + CorrectVowelsCounts[i]);
+
+                // Display the correct answer for the number of words containing lowercase characters.
+                Console.WriteLine("Correct Answer - Words with Lowercase Characters: " + CorrectLowerCharactersCounts[i]);
+
+                // Display the correct answer for the number of words containing special characters.
+                Console.WriteLine("Correct Answer - Words with Special Characters: " + CorrectSpecialCharactersCounts[i]);
+
+                // Print an empty line to separate the answers of each question.
+                Console.WriteLine();
+            }
+        }
 
         static int ReadChoicePlayerForResultMenu()
         {
@@ -809,7 +836,7 @@ namespace RandomTextQuiz
                     ShowUserAnswers();
                     break;
                 case 4:
-                    // ShowCorrectAnswers();
+                     ShowCorrectAnswers();
                     break;
                 case 5:
                     //  ShowUserAndCorrectAnswers();
