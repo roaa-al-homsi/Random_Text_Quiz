@@ -799,7 +799,38 @@ namespace RandomTextQuiz
                 Console.WriteLine();
             }
         }
+        static void ShowUserAndCorrectAnswers()
+        {
+            // Display the section title.
+            Console.WriteLine("************* User Answers and Correct Answers *************\n");
 
+            // Loop through all questions.
+            for (int i = 0; i < UserTotalLengths.Length; i++)
+            {
+                // Display the question number.
+                Console.WriteLine("Answers for Question " + (i + 1));
+                Console.WriteLine("*****************************************\n");
+
+                // Display the player's answer and the correct answer for total length.
+                Console.WriteLine("Total Length - User Answer: " + UserTotalLengths[i]);
+                Console.WriteLine("Total Length - Correct Answer: " + CorrectTotalLengths[i]+"\n");
+                
+                // Display the player's answer and the correct answer for words containing vowels.
+                Console.WriteLine("Words with Vowels - User Answer: " + UserVowelsCounts[i]);
+                Console.WriteLine("Words with Vowels - Correct Answer: " + CorrectVowelsCounts[i]+"\n");
+
+                // Display the player's answer and the correct answer for words containing lowercase characters.
+                Console.WriteLine("Words with Lowercase Characters - User Answer: " + UserLowerCharactersCounts[i]);
+                Console.WriteLine("Words with Lowercase Characters - Correct Answer: " + CorrectLowerCharactersCounts[i] + "\n");
+
+                // Display the player's answer and the correct answer for words containing special characters.
+                Console.WriteLine("Words with Special Characters - User Answer: " + UserSpecialCharactersCounts[i]);
+                Console.WriteLine("Words with Special Characters - Correct Answer: " + CorrectSpecialCharactersCounts[i] + "\n");
+
+                // Print an empty line to separate the answers of each question.
+                Console.WriteLine();
+            }
+        }
         static int ReadChoicePlayerForResultMenu()
         {
             int choice = 0;
@@ -839,7 +870,7 @@ namespace RandomTextQuiz
                      ShowCorrectAnswers();
                     break;
                 case 5:
-                    //  ShowUserAndCorrectAnswers();
+                      ShowUserAndCorrectAnswers();
                     break;
                 case -1:
                     //  exit;
@@ -849,25 +880,38 @@ namespace RandomTextQuiz
         static void DisplayStatisticsAndResultMenu()
         {
             int choice = 0;
+
             do
             {
+                // Clear the console before displaying the menu.
                 Console.Clear();
 
+                // Display the statistics and result menu.
                 Console.WriteLine();
                 Console.WriteLine("******************* STATISTICS AND RESULT MENU *******************");
                 Console.WriteLine("*************************************************************");
                 Console.WriteLine();
-                Console.WriteLine("           [1] Show percentage of correct answers.  ");
-                Console.WriteLine("           [2] Show generated text for each question.  ");
-                Console.WriteLine("           [3] Show user answer without text.  ");
-                Console.WriteLine("           [4] Show correct answer without text.  ");
-                Console.WriteLine("           [5] Show user answer and correct answer together without text.  ");
-                Console.WriteLine("           [6] Terminate the program using [quit] don't use 6 input..  ");
+                Console.WriteLine("           [1] Show percentage of correct answers.");
+                Console.WriteLine("           [2] Show generated text for each question.");
+                Console.WriteLine("           [3] Show user answers without text.");
+                Console.WriteLine("           [4] Show correct answers without text.");
+                Console.WriteLine("           [5] Show user answers and correct answers together without text.");
+                Console.WriteLine("           Type [QUIT] to terminate the program.\n");
                 Console.WriteLine("*************************************************************");
 
+                // Read the player's choice.
                 choice = ReadChoicePlayerForResultMenu();
+
+                // Execute the selected menu option.
                 PerformChoiceStatisticMenu(choice);
-                Console.ReadKey();
+
+                // Wait for the player to press a key before displaying the menu again.
+                if (choice != -1)
+                {
+                    Console.WriteLine("\nPress any key to return to the menu...");
+                    Console.ReadKey();
+                }
+
             } while (choice != -1);
         }
 
@@ -875,9 +919,16 @@ namespace RandomTextQuiz
 
 
         static void StatGame()
-        {
-            //int NumberOfQuestions = ReadNumberOfQuestions();
-            // DisplayPlayerInfo();
+        {   
+            //call method to print info for my device.
+            PrintInfoMyDevice();
+
+            int numberOfQuestions = ReadNumberOfQuestions();
+            InitializeArrays(numberOfQuestions);
+            DisplayPlayerInfo();
+            StartQuiz(numberOfQuestions);
+            DisplayStatisticsAndResultMenu();
+
 
             // string s = GenerateRandomText();
             //  Console.WriteLine(s); //gernerated text random
@@ -886,14 +937,11 @@ namespace RandomTextQuiz
             //Console.WriteLine("sum is lowercase :" + CountWordsWithLowerCharacter(s));
             // Console.WriteLine("sum is Special Characters :" + CountWordsWithSpecialCharacters(s));
 
-            int n = ReadNumberOfQuestions();
-            InitializeArrays(n);
-            StartQuiz(n);
 
             //القسم التاني للوظيفة 
 
 
-            DisplayStatisticsAndResultMenu();
+
 
 
         }
@@ -901,8 +949,7 @@ namespace RandomTextQuiz
 
         static void Main(string[] args)
         {
-            //call method to print info for my device.
-            PrintInfoMyDevice();
+            
             StatGame();
         }
     }
