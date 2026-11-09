@@ -731,7 +731,7 @@ namespace RandomTextQuiz
         static void ShowGeneratedTexts()
         {
             // Display the section title.
-            Console.WriteLine("************* All Generated Texts *************");
+            Console.WriteLine("************* All Generated Texts *************\n");
 
             // Loop through all generated texts.
             for (int i = 0; i < GeneratedTexts.Length; i++)
@@ -740,6 +740,34 @@ namespace RandomTextQuiz
                 Console.WriteLine("Question " + (i + 1) + ": " + GeneratedTexts[i]);
 
                 // Print an empty line to separate the questions.
+                Console.WriteLine();
+            }
+        }
+        static void ShowUserAnswers()
+        {
+            // Display the section title.
+            Console.WriteLine("************* All User Answers *************\n");
+
+            // Loop through all questions.
+            for (int i = 0; i < UserTotalLengths.Length; i++)
+            {
+                // Display the question number and indicate that the following values are the player's answers.
+                Console.WriteLine("Player's Answers for Question " + (i + 1));
+                Console.WriteLine("*****************************************\n");
+
+                // Display the player's answer for the total length question.
+                Console.WriteLine("Player's Answer - Total Length: " + UserTotalLengths[i]);
+
+                // Display the player's answer for the number of words containing vowels.
+                Console.WriteLine("Player's Answer - Words with Vowels: " + UserVowelsCounts[i]);
+
+                // Display the player's answer for the number of words containing lowercase characters.
+                Console.WriteLine("Player's Answer - Words with Lowercase Characters: " + UserLowerCharactersCounts[i]);
+
+                // Display the player's answer for the number of words containing special characters.
+                Console.WriteLine("Player's Answer - Words with Special Characters: " + UserSpecialCharactersCounts[i]);
+
+                // Print an empty line to separate the answers of each question.
                 Console.WriteLine();
             }
         }
@@ -778,7 +806,7 @@ namespace RandomTextQuiz
                     ShowGeneratedTexts();
                     break;
                 case 3:
-                    //ShowUserAnswers();
+                    ShowUserAnswers();
                     break;
                 case 4:
                     // ShowCorrectAnswers();
