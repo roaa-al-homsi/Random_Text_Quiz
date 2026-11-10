@@ -23,7 +23,7 @@ namespace RandomTextQuiz
         // 1 = All answers are correct.
         // 2 = Some answers are correct and some are wrong.
         static int[] EvaluationCodes;
-
+        static bool[] IgnoredQuestions;
         static Random randomGenerator = new Random();
         static int RandomNumber(int From, int To)
         {
@@ -77,6 +77,8 @@ namespace RandomTextQuiz
             UserLowerCharactersCounts = new int[numberOfQuestions];
             UserSpecialCharactersCounts = new int[numberOfQuestions];
             UserVowelsCounts = new int[numberOfQuestions];
+
+            IgnoredQuestions = new bool[numberOfQuestions];
         }
 
 
@@ -536,6 +538,10 @@ namespace RandomTextQuiz
                 // Display the current question number.
                 Console.WriteLine("Question :" + (i + 1));
                 Console.WriteLine("--------");
+
+                // Set the question status to not ignored by default.
+                IgnoredQuestions[i] = false;
+              
                 // Generate a random text and display it to the player.
                 string generatedText = GenerateRandomText();
                 Console.WriteLine("**************[" + generatedText + "]**************");
@@ -556,6 +562,7 @@ namespace RandomTextQuiz
                 // Check if the player wants to ignore the current question.
                 if (answer == "IGNORE")
                 {
+                    IgnoredQuestions[i] = true;
                     // Mark the entire question as wrong and move to the next question.
                     EvaluationCodes[i] = 0;
                     Console.WriteLine("The Question Is Ignored...As you like..");
@@ -572,6 +579,7 @@ namespace RandomTextQuiz
                 // Check if the player wants to ignore the current question.
                 if (answer == "IGNORE")
                 {
+                    IgnoredQuestions[i] = true;
                     // Mark the entire question as wrong and move to the next question.
                     EvaluationCodes[i] = 0;
                     Console.WriteLine("The Question Is Ignored...As you like..");
@@ -588,6 +596,7 @@ namespace RandomTextQuiz
                 // Check if the player wants to ignore the current question.
                 if (answer == "IGNORE")
                 {
+                    IgnoredQuestions[i] = true;
                     // Mark the entire question as wrong and move to the next question.
                     EvaluationCodes[i] = 0;
                     Console.WriteLine("The Question Is Ignored...As you like..");
@@ -604,6 +613,7 @@ namespace RandomTextQuiz
                 // Check if the player wants to ignore the current question.
                 if (answer == "IGNORE")
                 {
+                    IgnoredQuestions[i] = true;
                     // Mark the entire question as wrong and move to the next question.
                     EvaluationCodes[i] = 0;
                     Console.WriteLine("The Question Is Ignored...As you like..");
@@ -737,12 +747,12 @@ namespace RandomTextQuiz
             // Loop through all questions.
             for (int i = 0; i < UserTotalLengths.Length; i++)
             {
-                // Display the question number and indicate that the following values are the player's answers.
+                // Display the question number.
                 Console.WriteLine("Player's Answers for Question " + (i + 1));
                 Console.WriteLine("*****************************************\n");
 
                 // Check if the player ignored the current question.
-                if (EvaluationCodes[i] == 0)
+                if (IgnoredQuestions[i])
                 {
                     // Display a message indicating that the question was ignored.
                     Console.WriteLine("Question Status: IGNORED");
@@ -806,27 +816,37 @@ namespace RandomTextQuiz
                 Console.WriteLine("Answers for Question " + (i + 1));
                 Console.WriteLine("*****************************************\n");
 
-                // Display the player's answer and the correct answer for total length.
-                Console.WriteLine("Total Length - User Answer: " + UserTotalLengths[i]);
-                Console.WriteLine("Total Length - Correct Answer: " + CorrectTotalLengths[i] + "\n");
+                // Check whether the player ignored the current question.
+                if (IgnoredQuestions[i])
+                {
+                    // Display the ignored status instead of the player's stored answers.
+                    Console.WriteLine("Player's Answers: IGNORED\n");
+                }
+                else
+                {
+                    // Display the player's answer for the total length question.
+                    Console.WriteLine("Total Length - User Answer: " + UserTotalLengths[i]);
 
-                // Display the player's answer and the correct answer for words containing vowels.
-                Console.WriteLine("Words with Vowels - User Answer: " + UserVowelsCounts[i]);
-                Console.WriteLine("Words with Vowels - Correct Answer: " + CorrectVowelsCounts[i] + "\n");
+                    // Display the player's answer for the number of words containing vowels.
+                    Console.WriteLine("Words with Vowels - User Answer: " + UserVowelsCounts[i]);
 
-                // Display the player's answer and the correct answer for words containing lowercase characters.
-                Console.WriteLine("Words with Lowercase Characters - User Answer: " + UserLowerCharactersCounts[i]);
-                Console.WriteLine("Words with Lowercase Characters - Correct Answer: " + CorrectLowerCharactersCounts[i] + "\n");
+                    // Display the player's answer for the number of words containing lowercase characters.
+                    Console.WriteLine("Words with Lowercase Characters - User Answer: " + UserLowerCharactersCounts[i]);
 
-                // Display the player's answer and the correct answer for words containing special characters.
-                Console.WriteLine("Words with Special Characters - User Answer: " + UserSpecialCharactersCounts[i]);
-                Console.WriteLine("Words with Special Characters - Correct Answer: " + CorrectSpecialCharactersCounts[i] + "\n");
+                    // Display the player's answer for the number of words containing special characters.
+                    Console.WriteLine("Words with Special Characters - User Answer: " + UserSpecialCharactersCounts[i]);
+                }
+
+                // Display the correct answers for all four questions.
+                Console.WriteLine("\nTotal Length - Correct Answer: " + CorrectTotalLengths[i]);
+                Console.WriteLine("Words with Vowels - Correct Answer: " + CorrectVowelsCounts[i]);
+                Console.WriteLine("Words with Lowercase Characters - Correct Answer: " + CorrectLowerCharactersCounts[i]);
+                Console.WriteLine("Words with Special Characters - Correct Answer: " + CorrectSpecialCharactersCounts[i]);
 
                 // Print an empty line to separate the answers of each question.
                 Console.WriteLine();
             }
         }
-
         // Method to read and validate the player's choice from the result menu.
         static int ReadChoicePlayerForResultMenu()
         {
@@ -938,7 +958,7 @@ namespace RandomTextQuiz
 
             int numberOfQuestions = ReadNumberOfQuestions();
             InitializeArrays(numberOfQuestions);
-            DisplayPlayerInfo();
+           // DisplayPlayerInfo();
             StartQuiz(numberOfQuestions);
             DisplayStatisticsAndResultMenu();
         }
