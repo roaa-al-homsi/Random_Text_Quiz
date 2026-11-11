@@ -981,17 +981,29 @@ namespace RandomTextQuiz
         }
         static void StatGame()
         {
-            //call method to print info for my device.
+            // Call the method to display information about the current device.
             PrintInfoMyDevice();
 
+            // Read the number of questions that the player wants to answer.
             int numberOfQuestions = ReadNumberOfQuestions();
+
+            // Initialize all arrays based on the selected number of questions.
             InitializeArrays(numberOfQuestions);
-           // DisplayPlayerInfo();
+
+            // Display the player's information and accepted characters.
+            DisplayPlayerInfo();
+
+            // Start the quiz by generating texts and receiving the player's answers.
             StartQuiz(numberOfQuestions);
+
+            // Display the statistics and results menu after completing the quiz.
             DisplayStatisticsAndResultMenu();
         }
+
+        // The main entry point of the program.
         static void Main(string[] args)
         {
+            // Call the main game method to start the program.
             StatGame();
         }
     }
